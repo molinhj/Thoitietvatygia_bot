@@ -62,7 +62,7 @@ def send_report():
     print("Da gui bao cao thanh cong ve telegram!")
 # CHUONG TRINH CHINH
 if __name__ == '__main__':
-    threading.thread(target=run, daemon=True).start()
+    threading.Thread(target=run, daemon=True).start()
     schedule.every().day.at('07:00').do(send_report)
     print('Bot da khoi dong va dang cho den 07:00 sang mai')
     while True:
