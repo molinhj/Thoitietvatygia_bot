@@ -12,7 +12,7 @@ tele_token = os.getenv('tele_token')
 my_chat_id = os.getenv('my_chat_id')
 
 #TAO WEB SEVER NHO
-app = flask(__name__)
+app = Flask(__name__)
 @app.route('/')
 def home():
     print('Bot dang chay ngon lanh')
