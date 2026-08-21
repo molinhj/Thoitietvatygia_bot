@@ -2,7 +2,7 @@ import requests
 import schedule
 import time
 import os
-from flask import flask
+from flask import Flask
 import threading
 from dotenv import load_dotenv
 
