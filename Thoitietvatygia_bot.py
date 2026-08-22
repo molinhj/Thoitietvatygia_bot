@@ -5,6 +5,8 @@ import os
 from flask import Flask
 import threading
 from dotenv import load_dotenv
+import moneyexchanging
+import weather_forecast
 
 load_dotenv()
 
@@ -15,7 +17,7 @@ my_chat_id = os.getenv('my_chat_id')
 app = Flask(__name__)
 @app.route('/')
 def home():
-    print('Bot dang chay ngon lanh'), 200
+    print('Bot dang chay ngon lanh'),200
 def run():
     app.run(host='0.0.0.0', port=8080)
 
@@ -62,9 +64,31 @@ def send_report():
     print("Da gui bao cao thanh cong ve telegram!")
 # CHUONG TRINH CHINH
 if __name__ == '__main__':
+    def check_tele_message():
+        last_update_id = 0
+        while True:
+            try:
+                #GOI API TELEGRAM LAY TIN NHAN MOI
+                url = f'https://api.telegram.org/bot{tele_token}/getUpdates?offset={last_update_id + 1}&timeout=30'
+                respone = requests.get(url).json()
+                for result in respone.get('result',[]):
+                    last_update_id = result['update_id']
+                    text = result.get('message',{}).get('text','')
+                    chat_id = result.get('message',{}).get('chat',{}).get('id')
+                #KIEM TRA TIN NHAN
+                if text == '/tygia':
+                    msg = moneyexchanging.get_tygia()
+                    send_telegram_message(msg, chat_id)
+                elif text == '/thoitiet':
+                    msg = weather_forecast.get_thoitiet()
+                    send_telegram_message(msg, chat_id)
+            except Exception as e:
+                print ('loi',e)
+            threading.Thread(target=check_tele_message, daemon=True).start()
     threading.Thread(target=run, daemon=True).start()
     schedule.every().day.at('07:00').do(send_report)
     print('Bot da khoi dong va dang cho den 07:00 sang mai')
     while True:
         schedule.run_pending()
         time.sleep(60)
+
