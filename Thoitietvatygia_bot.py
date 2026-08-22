@@ -15,7 +15,7 @@ my_chat_id = os.getenv('my_chat_id')
 app = Flask(__name__)
 @app.route('/')
 def home():
-    print('Bot dang chay ngon lanh')
+    print('Bot dang chay ngon lanh'), 200
 def run():
     app.run(host='0.0.0.0', port=8080)
 
