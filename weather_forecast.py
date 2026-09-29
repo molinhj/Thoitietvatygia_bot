@@ -17,4 +17,8 @@ def get_thoitiet(place='Hue'):
 
     except Exception as e:
         return f"❌ Lỗi lấy thời tiết: {e}"
+import time
+
+while True:
+    time.sleep(3600)
 
