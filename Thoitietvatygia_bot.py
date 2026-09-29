@@ -27,7 +27,12 @@ def home():
 
 
 def run():
-    app.run(host='0.0.0.0', port=8080)
+    # Render sẽ tự cấp cổng PORT vào môi trường, nếu không có sẽ dùng 8080
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
+
+# Chạy web server ẩn trên một luồng riêng để trả lời Render
+Thread(target=run).start()
 
 
 # HÀM GỬI TIN NHẮN ĐẾN TELEGRAM
@@ -117,8 +122,11 @@ if __name__ == '__main__':
     schedule.every().day.at('07:00').do(send_report)
     print('Bot da khoi dong va dang cho den 07:00 sang mai')
 
+    # Khai báo lịch chạy trước
+    schedule.every(15).minutes.do(auto_check_price)
+
+    # Vòng lặp duy trì chạy liên tục ở cuối cùng
     while True:
         schedule.run_pending()
         time.sleep(60)
-        schedule.every(15).minutes.do(auto_check_price)
-web: python Thoitietvatygia_bot.py
+
