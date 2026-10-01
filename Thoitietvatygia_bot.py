@@ -115,8 +115,6 @@ def auto_check_price():
 
 # CHƯƠNG TRÌNH CHÍNH
 if __name__ == '__main__':
-    # Chạy Web Server ngầm
-    threading.Thread(target=run, daemon=True).start()
 
     # Chạy hàm lắng nghe tin nhắn ngầm
     threading.Thread(target=check_tele_message, daemon=True).start()
