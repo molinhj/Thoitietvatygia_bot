@@ -3,7 +3,7 @@ import schedule
 import time
 import os
 from flask import Flask
-import threading
+from threading import Thread
 
 # TẠO WEB SERVER NHẸ
 app = Flask(__name__)
