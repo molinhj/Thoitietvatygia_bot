@@ -4,18 +4,6 @@ import time
 import os
 from flask import Flask
 import threading
-from dotenv import load_dotenv
-
-# Import các hàm từ file riêng của bạn
-import moneyexchanging
-import weather_forecast
-from gold_price import get_gold_price
-from gold_price import check_gold_price
-
-load_dotenv()
-
-tele_token = os.getenv('tele_token')
-my_chat_id = os.getenv('my_chat_id')
 
 # TẠO WEB SERVER NHẸ
 app = Flask(__name__)
@@ -33,6 +21,21 @@ def run():
 
 # Chạy web server ẩn trên một luồng riêng để trả lời Render
 Thread(target=run).start()
+
+from dotenv import load_dotenv
+
+# Import các hàm từ file riêng của bạn
+import moneyexchanging
+import weather_forecast
+from gold_price import get_gold_price
+from gold_price import check_gold_price
+
+load_dotenv()
+
+tele_token = os.getenv('tele_token')
+my_chat_id = os.getenv('my_chat_id')
+
+
 
 
 # HÀM GỬI TIN NHẮN ĐẾN TELEGRAM
